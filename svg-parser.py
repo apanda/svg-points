@@ -14,7 +14,6 @@ for path in paths:
     locationy = 0.0
     locations = []
     cubic_prev_control = None
-    square_prev_control = None
     for command in commands:
         if command[0] is 'M':
             parts = re.findall(regex_numbers, command[1:])
@@ -66,33 +65,7 @@ for path in paths:
             locationx = ep[0]
             locationy = ep[1]
             locations.append((locationx, locationy))
-        elif command[0] is 'Q':
-            parts = re.findall(regex_numbers, command[1:])
-            assert(len(parts) == 4)
-            parts = map(float, parts)
-            cp = (parts[0], parts[1])
-            ep = (parts[2], parts[3])
-            square_prev_control = cp
-            midx = (0.5 ** 2) * locationx + 2.0 * (0.5 ** 2) * cp[0] + (0.5 ** 2) * ep[0]
-            midy = (0.5 ** 2) * locationy + 2.0 * (0.5 ** 2) * cp[1] + (0.5 ** 2) * ep[1]
-            locations.append((midx, midy))
-            (locationx, locationy) = ep
-            locations.append(ep)
-        elif command[0] is 'T':
-            parts = re.findall(regex_numbers, command[1:])
-            assert(len(parts), 2)
-            parts = map(float, parts)
-            if square_prev_control is None:
-                square_prev_control = (locationx, locationy)
-            cp = (2*locationx - square_prev_control[0], 2 * locationy - square_prev_control[1])
-            square_prev_control = cp
-            ep = (parts[0], parts[1])
-            midx = (0.5 ** 2) * locationx + 2.0 * (0.5 ** 2) * cp[0] + (0.5 ** 2) * ep[0]
-            midy = (0.5 ** 2) * locationy + 2.0 * (0.5 ** 2) * cp[1] + (0.5 ** 2) * ep[1]
-            locations.append((midx, midy))
-            (locationx, locationy) = ep
-            locations.append(ep)
-        elif command[0] is 'A' or command[0] is 'R':
+        elif command[0] is 'Q' or command[0] is 'T' or command[0] is 'A' or command[0] is 'R':
             raise Exception("Don't know how to interpret")
         elif command[0] is 'm':
             parts = re.findall(regex_numbers, command[1:])
@@ -144,40 +117,12 @@ for path in paths:
             locationx = ep[0]
             locationy = ep[1]
             locations.append((locationx, locationy))
-        elif command[0] is 'q':
-            parts = re.findall(regex_numbers, command[1:])
-            assert(len(parts) == 4)
-            parts = map(float, parts)
-            cp = (locationx + parts[0], locationy + parts[1])
-            ep = (locationx + parts[2], locationy + parts[3])
-            square_prev_control = cp
-            midx = (0.5 ** 2) * locationx + 2.0 * (0.5 ** 2) * cp[0] + (0.5 ** 2) * ep[0]
-            midy = (0.5 ** 2) * locationy + 2.0 * (0.5 ** 2) * cp[1] + (0.5 ** 2) * ep[1]
-            locations.append((midx, midy))
-            (locationx, locationy) = ep
-            locations.append(ep)
-        elif command[0] is 't':
-            parts = re.findall(regex_numbers, command[1:])
-            assert(len(parts), 2)
-            parts = map(float, parts)
-            if square_prev_control is None:
-                square_prev_control = (locationx, locationy)
-            cp = (2*locationx - square_prev_control[0], 2 * locationy - square_prev_control[1])
-            square_prev_control = cp
-            ep = (locationx + parts[0], locationy + parts[1])
-            midx = (0.5 ** 2) * locationx + 2.0 * (0.5 ** 2) * cp[0] + (0.5 ** 2) * ep[0]
-            midy = (0.5 ** 2) * locationy + 2.0 * (0.5 ** 2) * cp[1] + (0.5 ** 2) * ep[1]
-            locations.append((midx, midy))
-            (locationx, locationy) = ep
-            locations.append(ep)
-        elif command[0] is 'a' or command[0] is 'r':
+        elif command[0] is 'q' or command[0] is 't' or command[0] is 'a' or command[0] is 'r':
             print command[0]
             raise Exception("Don't know how to interpret")
         else:
             raise Exception("Don't like this input")
         if command[0] not in ['C', 'c', 's','S']:
             cubic_prev_control = None
-        if command[0] not in ['Q', 'q', 't', 'T']:
-            square_prev_control = None
 for location in locations:
     print str.format("{0},{1}", location[0], location[1])
