@@ -126,3 +126,9 @@ for path in paths:
             cubic_prev_control = None
 for location in locations:
     print str.format("{0},{1}", location[0], location[1])
+polylines = svg.getElementsByTagName('polyline')
+points = paths[0].getAttribute('points')
+points = points.split()
+points = map(lambda p: tuple(map(float, p.split(','))), points)
+for point in points:
+  print str.format("{0},{1}", point[0], point[1]) 

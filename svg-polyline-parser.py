@@ -4,7 +4,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 from xml.dom.minidom import parse
 svg = parse(sys.argv[1])
-paths = svg.getElementsByTagName('polyline')
+polylines = svg.getElementsByTagName('polyline')
 import re
 points = paths[0].getAttribute('points')
 points = points.split()
