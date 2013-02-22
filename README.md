@@ -14,4 +14,4 @@ The current toolchain is
 4. Run svg-parser.py to get a set of points.
 5. Run points-to-cdf.py to get the CDF.
 
-This currently doesn't really do anything about logscales, but that is pretty easy to solve (this will be updated shortly).
+To convert log-scale graphs use points-to-cdf-log.py 
