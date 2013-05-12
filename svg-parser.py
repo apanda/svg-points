@@ -124,10 +124,10 @@ for path in paths:
             raise Exception("Don't like this input")
         if command[0] not in ['C', 'c', 's','S']:
             cubic_prev_control = None
-for location in locations:
-    print str.format("{0},{1}", location[0], location[1])
+    for location in locations:
+        print str.format("{0},{1}", location[0], location[1])
 polylines = svg.getElementsByTagName('polyline')
-points = paths[0].getAttribute('points')
+points = polylines[0].getAttribute('points')
 points = points.split()
 points = map(lambda p: tuple(map(float, p.split(','))), points)
 for point in points:
