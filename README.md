@@ -9,7 +9,8 @@ are two problems with this
 The current toolchain is
 
 1. Open the PDF (of the entire paper, for example) or EPS in Illustrator (or Inkscape)
-2. Delete all objects (including the axes) except the curve itself
+2. Delete all objects (including the axes) except the curve itself. If
+   datapoints are represented as squares or other shapes, convert them into points.
 3. Save as a new SVG file
 4. Run svg-parser.py to get a set of points.
 5. Run points-to-cdf.py to get the CDF. Refer back to the original graph to
@@ -19,6 +20,9 @@ The current toolchain is
     - ymin: the y value of the left-most point
     - ymax: the y value of the right-most point
 
-To convert log-linear CDFs use points-to-cdf-log.py. You will need one
-additional parameter:
+To convert log-linear CDFs use points-to-cdf-log.py. Parameters are:
+    - expmin: the exponent of the x value of the left-most point
+    - expmax: the exponent of the x value of the right-most point
+    - ymin: the y value of the left-most point
+    - ymax: the y value of the right-most point
     - base: the base of the logarithm (usually 10)
